@@ -28,18 +28,19 @@ int main(int argc, char *argv[]) {
 
     myfile.close();
 
-    int ans = 0;
+    int checki, checkj, ans = 0;
     
+    int b[3][3] = {0};
+    // 0 = unvisited, 2 = visited, 1 = exit, -1 = loop
 
     for(int i = 0; i < N; i++){
         for(int j = 0; j < M; j++) {
 
-            bool b[3][3] = {false};
-
-            int checki = i, checkj = j;
+            checki = i;
+            checkj = j;
             
-            while(!(checki > N || checki < 0 || checkj > M || checkj < 0)) {
-                b[checki][checkj] = true;
+            while(!(checki > N - 1 || checki < 0 || checkj > M - 1 || checkj < 0)) {
+                b[checki][checkj] = 2;
 
                 switch (a[checki][checkj]) {
                     case 'U':
@@ -62,8 +63,13 @@ int main(int argc, char *argv[]) {
                         break;
                 }
 
-                if(b[checki][checkj] == true) {
-                    ans++;
+                if(b[checki][checkj] != 0) {
+                    if(b[checki][checkj] == 2 or b[checki][checkj] == -1) {
+                        ans++;
+                        b[i][j] = -1;
+                        break;
+                    }
+                    b[i][j] = 1;
                     break;
                 }
             }

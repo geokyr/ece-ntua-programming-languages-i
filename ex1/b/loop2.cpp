@@ -69,9 +69,9 @@ int check(int i, int j, int N, int M, char *a, int *b) {
 
 int main() {
     int N = 3, M = 3;
-    char a[N*M] = {'U', 'L', 'D', 'L', 'U', 'D', 'L', 'R', 'L'}; //if char a[N][M] -> wrong answer (4->7)
+    char a[N*M] = {'U', 'L', 'D', 'L', 'U', 'D', 'L', 'R', 'L'}; // if char a[N][M] -> wrong answer (4->7)
 
-    //0 -> unvisited, 1 -> success, -1 -> failure, 2 -> visited
+    // 0 -> unvisited, 1 -> success, -1 -> failure, 2 -> visited
     int b[N*M] = {0};
     int ans = 0;
 
