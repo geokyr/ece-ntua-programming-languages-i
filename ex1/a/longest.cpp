@@ -90,6 +90,5 @@ int main(int argc, char *argv[]) {
 *
 *  and with the help of:
 *  https://cs.stackexchange.com/questions/129353/find-the-length-of-the-longest-subarray-having-sum-greater-than-k
-*  https://replit.com/@Apass_Jack/cs129353longestsubarray
 */
 
