@@ -83,9 +83,9 @@ int main(int argc, char *argv[]) {
 
 /* Based on the following idea:
 *
-*  // -average = -sum/counter >= hospitals =>
-*  // -average' = -sum'/counter >= 0 =>
-*  // average' = sum'/counter <= 0
+*  -average = -sum/counter >= hospitals =>
+*  -average' = -sum'/counter >= 0 =>
+*  average' = sum'/counter <= 0
 *
 *  and with the help of:
 *  https://www.geeksforgeeks.org/longest-subarray-with-sum-greater-than-equal-to-zero/
