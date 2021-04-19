@@ -2,12 +2,12 @@
 #include <fstream>
 using namespace std;
 
-int pos(int i, int j, int N) {
-    return N*i + j;
+int pos(int i, int j, int M) {
+    return M*i + j;
 }
 
 int check(int i, int j, int N, int M, char *a, int *b) {
-    int position = pos(i, j, N);
+    int position = pos(i, j, M);
 
     if(b[position] == 1 || b[position] == -1) {
                 return b[position];
@@ -23,9 +23,9 @@ int check(int i, int j, int N, int M, char *a, int *b) {
                 return 1;
             }
             else {
-                b[pos(i, j, N)] = 2;
-                b[pos(i - 1, j, N)] = check(i - 1, j, N, M, a, b);
-                return b[pos(i - 1, j, N)];
+                b[pos(i, j, M)] = 2;
+                b[pos(i - 1, j, M)] = check(i - 1, j, N, M, a, b);
+                return b[pos(i - 1, j, M)];
             }
             break;
 
@@ -34,9 +34,9 @@ int check(int i, int j, int N, int M, char *a, int *b) {
                 return 1;
             }
             else {
-                b[pos(i, j, N)] = 2;
-                b[pos(i + 1, j, N)] = check(i + 1, j, N, M, a, b);
-                return b[pos(i + 1, j, N)];
+                b[pos(i, j, M)] = 2;
+                b[pos(i + 1, j, M)] = check(i + 1, j, N, M, a, b);
+                return b[pos(i + 1, j, M)];
             }
             break;
 
@@ -45,9 +45,9 @@ int check(int i, int j, int N, int M, char *a, int *b) {
                 return 1;
             }
             else {
-                b[pos(i, j, N)] = 2;
-                b[pos(i, j - 1, N)] = check(i, j - 1, N, M, a, b);
-                return b[pos(i, j - 1, N)];
+                b[pos(i, j, M)] = 2;
+                b[pos(i, j - 1, M)] = check(i, j - 1, N, M, a, b);
+                return b[pos(i, j - 1, M)];
             }
             break;
 
@@ -56,9 +56,9 @@ int check(int i, int j, int N, int M, char *a, int *b) {
                 return 1;
             }
             else {
-                b[pos(i, j, N)] = 2;
-                b[pos(i, j + 1, N)] = check(i, j + 1, N, M, a, b);
-                return b[pos(i, j + 1, N)];
+                b[pos(i, j, M)] = 2;
+                b[pos(i, j + 1, M)] = check(i, j + 1, N, M, a, b);
+                return b[pos(i, j + 1, M)];
             }
             break;       
         
@@ -100,8 +100,8 @@ int main(int argc, char *argv[]) {
 
     for(int i = 0; i < N; i++){
         for(int j = 0; j < M; j++) {
-            b[pos(i, j, N)] = check(i, j, N, M, a, b);
-            if(b[pos(i, j, N)] == -1) {
+            b[pos(i, j, M)] = check(i, j, N, M, a, b);
+            if(b[pos(i, j, M)] == -1) {
                 ans++;
             }
         }
