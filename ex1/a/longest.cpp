@@ -70,9 +70,9 @@ int main(int argc, char *argv[]) {
 
     if(myfile.is_open()) {
         myfile >> days;
-        // cout << "days" << days << endl;
+        // cout << "days: " << days << endl;
         myfile >> hospitals;
-        // cout << "hospitals" << hospitals << endl;
+        // cout << "hospitals: " << hospitals << endl;
     }
 
     int arr[days];
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
     if(myfile.is_open()) {
         for(int i = 0; i < days; i++) {
             myfile >> arr[i];
-            // cout << "arr[" << i << "]" << arr[i] << endl;;
+            // cout << "arr[" << i << "]: " << arr[i] << endl;;
         }
     }
 

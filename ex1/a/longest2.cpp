@@ -1,18 +1,19 @@
 #include <iostream>
 #include <climits>
 #include <algorithm>
+#include <fstream>
 using namespace std;
 
-/*int* prefix(int arr[], int days) {
-    int prefix[days + 1];
-    prefix[0] = 0;
+// int* prefix(int arr[], int days) {
+//     int prefix[days + 1];
+//     prefix[0] = 0;
     
-    for (int i = 1; i < days; i++) {
-        prefix[i] = prefix[i - 1] + arr[i - 1];
-    }
+//     for (int i = 1; i < days; i++) {
+//         prefix[i] = prefix[i - 1] + arr[i - 1];
+//     }
 
-    return prefix;
-}*/
+//     return prefix;
+// }
 
 int longestSubarray(int arr[], int len) {
     int lcnt = 1, left[len] = {0};
@@ -62,27 +63,54 @@ int longestSubarray(int arr[], int len) {
     return answer;
 }
 
-int main() {
-    //int days = 11;
-    int hospitals = 3;
-    //int a[days] = {42, -10, 8, 1, 11, -6, -12, 16, -15, -11, 13};
+int main(int argc, char *argv[]) {
+    // int days = 11;
+    // int hospitals = 3;
+    // int a[days] = {42, -10, 8, 1, 11, -6, -12, 16, -15, -11, 13};
     
-    int days = 6;
-    int a[6] = { 10, -4, -3 ,-2, 3, 8 };
+    // int days = 6;
+    // int hospitals = 3;
+    // int a[6] = { 10, -4, -3 ,-2, 3, 8 };
+
+    // -avg = -sum/cnt >= hospitals
+    // -avg' = -sum'/cnt >= 0
+    // avg' = sum'/cnt <= 0
     
-    for(int i = 0; i<days; i++) {
-        a[i] = -a[i];
-        a[i] -= hospitals;
-        cout << a[i] << ", ";
-    } cout << endl;
+    int days, hospitals;
+
+    ifstream myfile(argv[1]);
+
+    if(myfile.is_open()) {
+        myfile >> days;
+        // cout << "days: " << days << endl;
+        myfile >> hospitals;
+        // cout << "hospitals: " << hospitals << endl;
+    }
+
+    int arr[days];
+
+    if(myfile.is_open()) {
+        for(int i = 0; i < days; i++) {
+            myfile >> arr[i];
+            // cout << "arr[" << i << "]: " << arr[i] << endl;
+        }
+    }
+
+    myfile.close();
+
+    for(int i = 0; i < days; i++) {
+        arr[i] = -arr[i];
+        arr[i] -= hospitals;
+        // cout << arr[i] << ", ";
+    }
 
     int prefix[days + 1];
     prefix[0] = 0;
     
     for (int i = 1; i < days + 1; i++) {
-        prefix[i] = prefix[i - 1] + a[i - 1];
-        cout << prefix[i] << ", ";
-    } cout << endl;
+        prefix[i] = prefix[i - 1] + arr[i - 1];
+        // cout << prefix[i] << ", ";
+    }
 
     cout << longestSubarray(prefix, days + 1) << endl;
     return 0;
