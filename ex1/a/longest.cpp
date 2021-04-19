@@ -56,13 +56,13 @@ int main(int argc, char *argv[]) {
     // int hospitals = 3;
     // int arr[days] = {10, -4, -3 ,-3, 3, 8};
 
-    // // int days = 11;
-    // // int hospitals = 3;
-    // // int arr[days] = {42, -10, 8, 1, 11, -6, -12, 16, -15, -11, 13};
+    // int days = 11;
+    // int hospitals = 3;
+    // int arr[days] = {42, -10, 8, 1, 11, -6, -12, 16, -15, -11, 13};
 
-    // // -avg = -sum/cnt >= hospitals
-    // // -avg' = -sum'/cnt >= 0
-    // // avg' = sum'/cnt <= 0
+    // -avg = -sum/cnt >= hospitals
+    // -avg' = -sum'/cnt >= 0
+    // avg' = sum'/cnt <= 0
     
     int days, hospitals;
 
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
     if(myfile.is_open()) {
         for(int i = 0; i < days; i++) {
             myfile >> arr[i];
-            //cout << "arr[" << i << "]" << arr[i] << endl;;
+            // cout << "arr[" << i << "]" << arr[i] << endl;;
         }
     }
 
@@ -95,31 +95,6 @@ int main(int argc, char *argv[]) {
     return 0;
 
 }
-
-
-// A[-8,-5,10,2]
-
-// S[-1,7,12,2,0]
-
-// ans = 0
-
-// searchspace[-1,7,12,]
-
-// index[0,1,2,]
-
-// j = 3
-
-// idx = -1
-
-// A{ 42, -10, 8, 1, 11, -6, -12, 16, -15, -11, 13 }
-
-// 37,-5,5
-
-// searchspace 37
-
-// index 0
-
-// ans 2
 
 // https://www.geeksforgeeks.org/longest-subarray-with-sum-greater-than-equal-to-zero/
 // https://leetcode.com/problems/longest-well-performing-interval/discuss/339791/c-on-solution-beats-9932-reduced-to-finding-longest-subarray-with-positive-sum
