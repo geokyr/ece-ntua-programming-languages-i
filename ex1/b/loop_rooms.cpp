@@ -24,9 +24,8 @@ int search(int i, int j, int n, int m, char *paths, int *values) {
                 return 1;
             }
             else {
-                values[index(i, j, m)] = 2;
-                values[index(i - 1, j, m)] = search(i - 1, j, n, m, paths, values);
-                return values[index(i - 1, j, m)];
+                values[idx] = 2;
+                return (values[index(i - 1, j, m)] = search(i - 1, j, n, m, paths, values));
             }
             break;
 
@@ -35,9 +34,8 @@ int search(int i, int j, int n, int m, char *paths, int *values) {
                 return 1;
             }
             else {
-                values[index(i, j, m)] = 2;
-                values[index(i + 1, j, m)] = search(i + 1, j, n, m, paths, values);
-                return values[index(i + 1, j, m)];
+                values[idx] = 2;
+                return (values[index(i + 1, j, m)] = search(i + 1, j, n, m, paths, values));
             }
             break;
 
@@ -46,9 +44,8 @@ int search(int i, int j, int n, int m, char *paths, int *values) {
                 return 1;
             }
             else {
-                values[index(i, j, m)] = 2;
-                values[index(i, j - 1, m)] = search(i, j - 1, n, m, paths, values);
-                return values[index(i, j - 1, m)];
+                values[idx] = 2;
+                return (values[index(i, j - 1, m)] = search(i, j - 1, n, m, paths, values));
             }
             break;
 
@@ -57,14 +54,13 @@ int search(int i, int j, int n, int m, char *paths, int *values) {
                 return 1;
             }
             else {
-                values[index(i, j, m)] = 2;
-                values[index(i, j + 1, m)] = search(i, j + 1, n, m, paths, values);
-                return values[index(i, j + 1, m)];
+                values[idx] = 2;
+                return (values[index(i, j + 1, m)] = search(i, j + 1, n, m, paths, values));
             }
             break;       
         
         default:
-            return 1000;
+            return -2;
             break;
     } 
 }
