@@ -52,17 +52,6 @@ int longestSubarray(int a[], int n) {
 }
 
 int main(int argc, char *argv[]) {
-    // int days = 6;
-    // int hospitals = 3;
-    // int arr[days] = {10, -4, -3 ,-3, 3, 8};
-
-    // int days = 11;
-    // int hospitals = 3;
-    // int arr[days] = {42, -10, 8, 1, 11, -6, -12, 16, -15, -11, 13};
-
-    // -avg = -sum/cnt >= hospitals
-    // -avg' = -sum'/cnt >= 0
-    // avg' = sum'/cnt <= 0
     
     int days, hospitals;
 
@@ -70,9 +59,7 @@ int main(int argc, char *argv[]) {
 
     if(myfile.is_open()) {
         myfile >> days;
-        // cout << "days: " << days << endl;
         myfile >> hospitals;
-        // cout << "hospitals: " << hospitals << endl;
     }
 
     int arr[days];
@@ -80,7 +67,6 @@ int main(int argc, char *argv[]) {
     if(myfile.is_open()) {
         for(int i = 0; i < days; i++) {
             myfile >> arr[i];
-            // cout << "arr[" << i << "]: " << arr[i] << endl;;
         }
     }
 
@@ -89,14 +75,18 @@ int main(int argc, char *argv[]) {
     for(int i = 0; i<days; i++) {
         arr[i] = -arr[i];
         arr[i] -= hospitals;
-        // cout << arr[i] << ", ";
     }
     cout << longestSubarray(arr, days) << endl;
     return 0;
 
 }
 
-// https://www.geeksforgeeks.org/longest-subarray-with-sum-greater-than-equal-to-zero/
-// https://leetcode.com/problems/longest-well-performing-interval/discuss/339791/c-on-solution-beats-9932-reduced-to-finding-longest-subarray-with-positive-sum
-// https://stackoverflow.com/questions/28356453/longest-positive-sum-substring
-// https://www.geeksforgeeks.org/largest-subarray-having-sum-greater-than-k/
+/* Based on the following idea:
+*
+*  // -average = -sum/counter >= hospitals =>
+*  // -average' = -sum'/counter >= 0 =>
+*  // average' = sum'/counter <= 0
+*
+*  and with the help of:
+*  https://www.geeksforgeeks.org/longest-subarray-with-sum-greater-than-equal-to-zero/
+*/
