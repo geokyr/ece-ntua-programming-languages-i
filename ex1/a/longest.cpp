@@ -39,7 +39,7 @@ int longestSubarray(int arr[], int len) {
         }
         else {
             rightp++;
-            //leftp++ optimization
+            leftp++;
         }
     }
     return answer;
