@@ -1,54 +1,48 @@
 #include <iostream>
-#include <cmath>
+#include <climits>
+#include <algorithm>
 #include <fstream>
 using namespace std;
 
-int search(int* searchspace, int s, int e, int key) {
-        int ans = -1;
-
-        while(s <= e) {
-            int mid = (s + e) /2 ;
-
-            if(searchspace[mid] - key >= 0) {
-                ans = mid;
-                e = mid - 1;
-            }
-            else {
-                s = mid + 1;
-            }
-        }
-        return ans;
-}
+int longestSubarray(int arr[], int len) {
+    int lcnt = 1, left[len] = {0};
     
-int longestSubarray(int a[], int n) {
-    int SuffixSum[n + 1];
-    SuffixSum[n] = 0;
-
-    for(int i = n - 1; i >= 0; --i) {
-        SuffixSum[i] = SuffixSum[i + 1] + a[i];
+    for(int i = 1; i < len; i++) {
+        if(arr[left[lcnt - 1]] > arr[i]) {
+            left[lcnt++] = i;
+        }
     }
 
-    int ans = 0;
-    int searchspace[n];
-    int index[n];
+    int rcnt = 1, right[len] = {len - 1};
 
-    int j = 0;
-    
-    for (int i = 0; i < n; ++i) { 
+    for(int i = len - 1; i > 0; i--) {
+        if(arr[right[rcnt - 1]] < arr[i]) {
+            right[rcnt++] = i;
+        }
+    }
 
-        if (j == 0 or SuffixSum[i] > searchspace[j - 1]) { 
-            searchspace[j] = SuffixSum[i]; 
-            index[j] = i; 
-            j++; 
+    reverse(right, right + rcnt);
+
+    int answer = -1, leftp = 0, rightp = 0;
+
+    while(leftp < lcnt && rightp < rcnt) {
+        if(arr[right[rightp]] >= arr[left[leftp]]) {
+            while (rightp + 1 < rcnt && arr[right[rightp + 1]] >= arr[left[leftp]]) {
+                rightp++;
+            }
+            answer = max(answer, right[rightp] - left[leftp]);
+            leftp++;
+            rightp++;
         } 
-
-        int idx = search(searchspace, 0, j - 1, SuffixSum[i + 1]); 
-
-        if (idx != -1) 
-            ans = max(ans, i - index[idx] + 1); 
-    } 
-
-    return ans; 
+        else if(left[leftp] < right[rightp] - 1){
+            leftp++;
+        }
+        else {
+            rightp++;
+            leftp++;
+        }
+    }
+    return answer;
 }
 
 int main(int argc, char *argv[]) {
@@ -63,7 +57,7 @@ int main(int argc, char *argv[]) {
     }
 
     int arr[days];
-    
+
     if(myfile.is_open()) {
         for(int i = 0; i < days; i++) {
             myfile >> arr[i];
@@ -72,13 +66,20 @@ int main(int argc, char *argv[]) {
 
     myfile.close();
 
-    for(int i = 0; i<days; i++) {
+    for(int i = 0; i < days; i++) {
         arr[i] = -arr[i];
         arr[i] -= hospitals;
     }
-    cout << longestSubarray(arr, days) << endl;
-    return 0;
 
+    int prefix[days + 1];
+    prefix[0] = 0;
+    
+    for (int i = 1; i < days + 1; i++) {
+        prefix[i] = prefix[i - 1] + arr[i - 1];
+    }
+
+    cout << longestSubarray(prefix, days + 1) << endl;
+    return 0;
 }
 
 /* Based on the following idea:
@@ -88,5 +89,5 @@ int main(int argc, char *argv[]) {
 *  average' = sum'/counter <= 0
 *
 *  and with the help of:
-*  https://geeksforgeeks.org/longest-subarray-with-sum-greater-than-equal-to-zero/
+*  https://cs.stackexchange.com/questions/129353/find-the-length-of-the-longest-subarray-having-sum-greater-than-k
 */
