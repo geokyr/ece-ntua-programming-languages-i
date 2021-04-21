@@ -1,8 +1,15 @@
 #include <iostream>
-#include <cmath>
 #include <fstream>
 using namespace std;
  
+int min(int x, int y) {
+    return (x < y ? x : y);
+}
+
+int max(int x, int y){
+    return (x > y ? x : y);
+}
+
 int maxIndexDiff(int arr[], int n){    
     int maxDiff = -1;
     int i, j;
