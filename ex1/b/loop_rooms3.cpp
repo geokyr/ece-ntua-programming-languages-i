@@ -1,36 +1,42 @@
 #include <iostream>
 #include <fstream>
-
 using namespace std;
 
-int search(int i, int j, int n, int m, char **paths, int **values) {
+int pos(int i, int j, int M) {
+    return M*i + j;
+}
 
-    if(values[i][j] == 1 || values[i][j] == -1) {
-        return values[i][j];
+int check(int i, int j, int N, int M, char *a, int *b) {
+    int position = pos(i, j, M);
+
+    if(b[position] == 1 || b[position] == -1) {
+        return b[position];
     }
-    
-    else if(values[i][j]  == 2) {
+
+    else if(b[position] == 2) {
         return -1;
     }
 
-    else switch (paths[i][j]) {
+    else switch (a[position]) {
         case 'U':
             if(i == 0) {
                 return 1;
             }
             else {
-                values[i][j] = 2;
-                return (values[i - 1][j] = search(i - 1, j, n, m, paths, values));
+                b[pos(i, j, M)] = 2;
+                b[pos(i - 1, j, M)] = check(i - 1, j, N, M, a, b);
+                return b[pos(i - 1, j, M)];
             }
             break;
 
         case 'D':
-            if(i == n - 1) {
+            if(i == N - 1) {
                 return 1;
             }
             else {
-                values[i][j]  = 2;
-                return (values[i + 1][j] = search(i + 1, j, n, m, paths, values));
+                b[pos(i, j, M)] = 2;
+                b[pos(i + 1, j, M)] = check(i + 1, j, N, M, a, b);
+                return b[pos(i + 1, j, M)];
             }
             break;
 
@@ -39,81 +45,62 @@ int search(int i, int j, int n, int m, char **paths, int **values) {
                 return 1;
             }
             else {
-                values[i][j] = 2;
-                return (values[i][j - 1] = search(i, j - 1, n, m, paths, values));
+                b[pos(i, j, M)] = 2;
+                b[pos(i, j - 1, M)] = check(i, j - 1, N, M, a, b);
+                return b[pos(i, j - 1, M)];
             }
             break;
 
         case 'R':
-            if(j == m - 1) {
+            if(j == M - 1) {
                 return 1;
             }
             else {
-                values[i][j] = 2;
-                return (values[i][j + 1] = search(i, j + 1, n, m, paths, values));
+                b[pos(i, j, M)] = 2;
+                b[pos(i, j + 1, M)] = check(i, j + 1, N, M, a, b);
+                return b[pos(i, j + 1, M)];
             }
             break;       
         
         default:
-            return -2;
+            return 1000;
             break;
-    } 
+    }
 }
 
 int main(int argc, char *argv[]) {
-    int n, m;
+
+    int N, M;
 
     ifstream myfile(argv[1]);
 
     if(myfile.is_open()) {
-        myfile >> n;
-        myfile >> m;
+        myfile >> N;
+        myfile >> M;
     }
 
-    char **paths = new char*[n];
-    for(int i = 0; i < n; i++) {
-        paths[i] = new char[m];
-    }
+    char a[N*M];
 
     if(myfile.is_open()) {
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
-                myfile >> paths[i][j];
-            }
+        for(int i = 0; i < N*M; i++) {
+            myfile >> a[i];
         }
     }
 
     myfile.close();
 
-    int **values = new int*[n];
-    for(int i = 0; i < n; i++) {
-        values[i] = new int[m];
-    }
+    // 0 -> unvisited, 1 -> success, -1 -> failure, 2 -> visited
+    int b[N*M] = {0};
+    int ans = 0;
 
-    // 0 -> unvisited, -1 -> loop, 1 -> exit, 2 -> visited
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
-            values[i][j] = 0;
-        }
-    }
-    
-    int counter = 0;
-
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
-            if((values[i][j] = search(i, j, n, m, paths, values)) == -1) {
-                counter++;
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < M; j++) {
+            b[pos(i, j, M)] = check(i, j, N, M, a, b);
+            if(b[pos(i, j, M)] == -1) {
+                ans++;
             }
-
         }
     }
 
-    for(int i = 0; i < n; ++i) {
-        delete [] values[i];
-        delete [] paths[i];
-    }
-    delete [] values;
-    delete [] paths;
-
-    cout << counter << endl;
+    cout << ans << endl;
 }

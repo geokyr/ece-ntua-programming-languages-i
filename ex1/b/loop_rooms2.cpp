@@ -1,42 +1,41 @@
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 
-int pos(int i, int j, int M) {
-    return M*i + j;
+int index(int i, int j, int m) {
+    return m * i + j;
 }
 
-int check(int i, int j, int N, int M, char *a, int *b) {
-    int position = pos(i, j, M);
+int search(int i, int j, int n, int m, char *paths, int *values) {
+    int idx = index(i, j, m);
 
-    if(b[position] == 1 || b[position] == -1) {
-        return b[position];
+    if(values[idx] == 1 || values[idx] == -1) {
+        return values[idx];
     }
-
-    else if(b[position] == 2) {
+    
+    else if(values[idx] == 2) {
         return -1;
     }
 
-    else switch (a[position]) {
+    else switch (paths[idx]) {
         case 'U':
             if(i == 0) {
                 return 1;
             }
             else {
-                b[pos(i, j, M)] = 2;
-                b[pos(i - 1, j, M)] = check(i - 1, j, N, M, a, b);
-                return b[pos(i - 1, j, M)];
+                values[idx] = 2;
+                return (values[index(i - 1, j, m)] = search(i - 1, j, n, m, paths, values));
             }
             break;
 
         case 'D':
-            if(i == N - 1) {
+            if(i == n - 1) {
                 return 1;
             }
             else {
-                b[pos(i, j, M)] = 2;
-                b[pos(i + 1, j, M)] = check(i + 1, j, N, M, a, b);
-                return b[pos(i + 1, j, M)];
+                values[idx] = 2;
+                return (values[index(i + 1, j, m)] = search(i + 1, j, n, m, paths, values));
             }
             break;
 
@@ -45,62 +44,59 @@ int check(int i, int j, int N, int M, char *a, int *b) {
                 return 1;
             }
             else {
-                b[pos(i, j, M)] = 2;
-                b[pos(i, j - 1, M)] = check(i, j - 1, N, M, a, b);
-                return b[pos(i, j - 1, M)];
+                values[idx] = 2;
+                return (values[index(i, j - 1, m)] = search(i, j - 1, n, m, paths, values));
             }
             break;
 
         case 'R':
-            if(j == M - 1) {
+            if(j == m - 1) {
                 return 1;
             }
             else {
-                b[pos(i, j, M)] = 2;
-                b[pos(i, j + 1, M)] = check(i, j + 1, N, M, a, b);
-                return b[pos(i, j + 1, M)];
+                values[idx] = 2;
+                return (values[index(i, j + 1, m)] = search(i, j + 1, n, m, paths, values));
             }
             break;       
         
         default:
-            return 1000;
+            return -2;
             break;
-    }
+    } 
 }
 
 int main(int argc, char *argv[]) {
-
-    int N, M;
+    int n, m;
 
     ifstream myfile(argv[1]);
 
     if(myfile.is_open()) {
-        myfile >> N;
-        myfile >> M;
+        myfile >> n;
+        myfile >> m;
     }
 
-    char a[N*M];
+    char paths[n*m];
 
     if(myfile.is_open()) {
-        for(int i = 0; i < N*M; i++) {
-            myfile >> a[i];
+        for(int i = 0; i < n * m; i++) {
+            myfile >> paths[i];
         }
     }
 
     myfile.close();
 
-    // 0 -> unvisited, 1 -> success, -1 -> failure, 2 -> visited
-    int b[N*M] = {0};
-    int ans = 0;
+    int values[n*m] = {0};
+    // 0 -> unvisited, -1 -> loop, 1 -> exit, 2 -> visited
+    int counter = 0;
 
-    for(int i = 0; i < N; i++){
-        for(int j = 0; j < M; j++) {
-            b[pos(i, j, M)] = check(i, j, N, M, a, b);
-            if(b[pos(i, j, M)] == -1) {
-                ans++;
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            if((values[index(i, j, m)] = search(i, j, n, m, paths, values)) == -1) {
+                counter++;
             }
+
         }
     }
 
-    cout << ans << endl;
+    cout << counter << endl;
 }
