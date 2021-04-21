@@ -85,7 +85,6 @@ int main(int argc, char *argv[]){
 *  (-sum'/days) >= 0 =>
 *  (-average') >= 0
 * 
-*
 *  and with an algorithm similar to this following logic:
 *  https://geeksforgeeks.org/longest-subarray-having-average-greater-than-or-equal-to-x-set-2/?fbclid=IwAR0H2CBTKkr0SzIUXKIKUODf__OIGSspz3ABqEXODU4J-cVbqNT-T6DVVls
 */
