@@ -3,15 +3,15 @@
 
 using namespace std;
 
-int search(int i, int j, int n, int m, char **paths, int **values) {
+int search(int i, int j, int n, int m, char **paths) {
 
     // If the room is already resolved return its value.
-    if(values[i][j] == 1 || values[i][j] == -1) {
-        return values[i][j];
+    if(paths[i][j] == 1 || paths[i][j] == -1) {
+        return paths[i][j];
     }
     
     // If the room has been visited again in this iteration its a non-exiting loop.
-    else if(values[i][j]  == 2) {
+    else if(paths[i][j]  == 2) {
         return -1;
     }
 
@@ -25,8 +25,8 @@ int search(int i, int j, int n, int m, char **paths, int **values) {
                 return 1;
             }
             else {
-                values[i][j] = 2;
-                return (values[i - 1][j] = search(i - 1, j, n, m, paths, values));
+                paths[i][j] = 2;
+                return (paths[i - 1][j] = search(i - 1, j, n, m, paths));
             }
             break;
 
@@ -35,8 +35,8 @@ int search(int i, int j, int n, int m, char **paths, int **values) {
                 return 1;
             }
             else {
-                values[i][j]  = 2;
-                return (values[i + 1][j] = search(i + 1, j, n, m, paths, values));
+                paths[i][j]  = 2;
+                return (paths[i + 1][j] = search(i + 1, j, n, m, paths));
             }
             break;
 
@@ -45,8 +45,8 @@ int search(int i, int j, int n, int m, char **paths, int **values) {
                 return 1;
             }
             else {
-                values[i][j] = 2;
-                return (values[i][j - 1] = search(i, j - 1, n, m, paths, values));
+                paths[i][j] = 2;
+                return (paths[i][j - 1] = search(i, j - 1, n, m, paths));
             }
             break;
 
@@ -55,8 +55,8 @@ int search(int i, int j, int n, int m, char **paths, int **values) {
                 return 1;
             }
             else {
-                values[i][j] = 2;
-                return (values[i][j + 1] = search(i, j + 1, n, m, paths, values));
+                paths[i][j] = 2;
+                return (paths[i][j + 1] = search(i, j + 1, n, m, paths));
             }
             break;       
         
@@ -92,24 +92,12 @@ int main(int argc, char *argv[]) {
 
     myfile.close();
     
-    // Dynamically allocate 2D array.
-    int **values = new int*[n];
-    for(int i = 0; i < n; i++) {
-        values[i] = new int[m];
-    }
-
-    // 0 -> unvisited, -1 -> loop, 1 -> exit, 2 -> visited.
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
-            values[i][j] = 0;
-        }
-    }
     
     int counter = 0;
 
     for(int i = 0; i < n; i++) {
         for(int j = 0; j < m; j++) {
-            if((values[i][j] = search(i, j, n, m, paths, values)) == -1) {
+            if((paths[i][j] = search(i, j, n, m, paths)) == -1) {
                 counter++;
             }
 
@@ -118,11 +106,9 @@ int main(int argc, char *argv[]) {
 
     // Free the dynamically allocated memory.
     for(int i = 0; i < n; ++i) {
-        delete [] values[i];
         delete [] paths[i];
     }
-    delete [] values;
     delete [] paths;
 
     cout << counter << endl;
-}
+}        
