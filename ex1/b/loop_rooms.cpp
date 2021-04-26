@@ -4,14 +4,15 @@
 using namespace std;
 
 int search(int i, int j, int n, int m, char **paths) {
+    char value = paths[i][j];
 
     // If the room is already resolved return its value.
-    if(paths[i][j] == 1 || paths[i][j] == -1) {
-        return paths[i][j];
+    if(value == 1 || value == -1) {
+        return value;
     }
     
     // If the room has been visited again in this iteration its a non-exiting loop.
-    else if(paths[i][j]  == 2) {
+    else if(value == 2) {
         return -1;
     }
 
@@ -19,7 +20,7 @@ int search(int i, int j, int n, int m, char **paths) {
     *  If it doesn't, mark this room as visited and update its value while
     *  calling recursively the function for the next room.
     */
-    else switch (paths[i][j]) {
+    else switch (value) {
         case 'U':
             if(i == 0) {
                 return 1;
@@ -76,7 +77,9 @@ int main(int argc, char *argv[]) {
         myfile >> m;
     }
 
-    // Dynamically allocate 2D array.
+    /* Dynamically allocate 2D array for the input, that later gets replaced with: 
+    *  1 -> exits, -1 -> can't exit, 2 -> visited.
+    */
     char **paths = new char*[n];
     for(int i = 0; i < n; i++) {
         paths[i] = new char[m];
@@ -96,6 +99,7 @@ int main(int argc, char *argv[]) {
 
     for(int i = 0; i < n; i++) {
         for(int j = 0; j < m; j++) {
+            // If the search function returns -1 (can't exit) then increment the counter.
             if((paths[i][j] = search(i, j, n, m, paths)) == -1) {
                 counter++;
             }
@@ -109,4 +113,4 @@ int main(int argc, char *argv[]) {
     delete [] paths;
 
     cout << counter << endl;
-}        
+}
