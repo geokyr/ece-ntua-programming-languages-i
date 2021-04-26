@@ -7,7 +7,7 @@ fun loop_rooms fileName =
 
                 (* A function to read integers from specified input. *)
                 fun readInt input = 
-                    Option.valOf (TextIO.scanStream (Int.scan StringCvt.DEC) input )
+                    Option.valOf (TextIO.scanStream (Int.scan StringCvt.DEC) input)
 
                 (* Open input file. *)
                 val inStream = TextIO.openIn file
