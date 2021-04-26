@@ -92,7 +92,6 @@ int main(int argc, char *argv[]) {
 
     myfile.close();
     
-    
     int counter = 0;
 
     for(int i = 0; i < n; i++) {
@@ -100,7 +99,6 @@ int main(int argc, char *argv[]) {
             if((paths[i][j] = search(i, j, n, m, paths)) == -1) {
                 counter++;
             }
-
         }
     }
 
