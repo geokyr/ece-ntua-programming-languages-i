@@ -4,7 +4,6 @@ fun loop_rooms fileName =
 
         fun parse file =
             let
-
                 (* A function to read integers from specified input. *)
                 fun readInt input = 
                     Option.valOf (TextIO.scanStream (Int.scan StringCvt.DEC) input)
@@ -24,7 +23,6 @@ fun loop_rooms fileName =
                 val inputList = readLines []:char list list 
                 val array = Array2.fromList inputList
                 val _ =TextIO.closeIn inStream
-
             in
                 (n, m, array)
             end
@@ -37,8 +35,10 @@ fun loop_rooms fileName =
                 (* If the room is already resolved return its value. *)
                 #"1" => #"1"
             |   #"0" => #"0" 
+                
                 (* If the room has been visited again in this iteration its a non-exiting loop. *)
             |   #"2" => #"0"
+                
                 (* If the room hasn't been resolved follow the path, and check if it exits.
                 *  If it doesn't, mark this room as visited and update its value while
                 *  calling recursively the function for the next room.
@@ -63,6 +63,8 @@ fun loop_rooms fileName =
                                 Array2.update(array, i, j, #"2");
                                 Array2.update(array, i, j + 1, search (i, j + 1, array, rows, columns));
                                 Array2.sub(array, i, j + 1))
+                
+                (* Default case with random character value. *)
             |   _ => #"9"
 
         (* Iterate function for our double for loop with the help of:
@@ -77,18 +79,21 @@ fun loop_rooms fileName =
                 go 0
             end
 
-        fun loop (i, j, array, rows, columns) = 
+        fun loop (i, j, rows, columns, array) = 
             iterate(rows, fn i =>
                 iterate(columns, fn j => (
                     Array2.update(array, i, j, search (i, j, array, rows, columns));
+                    
                     (* If the search function returns 0 (can't exit) then increment the counter. *)
                     if Array2.sub(array, i, j) = #"0" then 
                         counter := (!counter) + 1
                     else ()
                 )))
-
-        fun solve (n, m, array) = loop (0, 0, array, n, m)
     in
-        solve(parse fileName);
-        print(Int.toString(!counter) ^ "\n")
+        let
+            val (n, m, array) = parse fileName
+        in
+            loop(0, 0, n, m, array);
+            print(Int.toString(!counter) ^ "\n")
+        end
     end
