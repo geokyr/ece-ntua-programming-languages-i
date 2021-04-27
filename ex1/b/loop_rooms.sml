@@ -89,11 +89,9 @@ fun loop_rooms fileName =
                         counter := (!counter) + 1
                     else ()
                 )))
+
+        val (n, m, array) = parse fileName
     in
-        let
-            val (n, m, array) = parse fileName
-        in
-            loop(0, 0, n, m, array);
-            print(Int.toString(!counter) ^ "\n")
-        end
+        loop(0, 0, n, m, array);
+        print(Int.toString(!counter) ^ "\n")
     end
