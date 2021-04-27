@@ -1,7 +1,5 @@
 fun loop_rooms fileName =
     let
-        val counter : int ref = ref 0
-
         fun parse file =
             let
                 (* A function to read integers from specified input. *)
@@ -26,7 +24,9 @@ fun loop_rooms fileName =
             in
                 (n, m, array)
             end
-        
+
+        val (n, m, array) = parse fileName
+                
         (* Replace the array that has the input with the following pattern:
         *  1 -> exits, 0 -> can't exit, 2 -> visited.
         *) 
@@ -79,6 +79,8 @@ fun loop_rooms fileName =
                 go 0
             end
 
+        val counter : int ref = ref 0
+
         fun loop (i, j, rows, columns, array) = 
             iterate(rows, fn i =>
                 iterate(columns, fn j => (
@@ -89,8 +91,6 @@ fun loop_rooms fileName =
                         counter := (!counter) + 1
                     else ()
                 )))
-
-        val (n, m, array) = parse fileName
     in
         loop(0, 0, n, m, array);
         print(Int.toString(!counter) ^ "\n")
