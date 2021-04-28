@@ -24,6 +24,8 @@ fun longest fileName =
 
         val (days, hospitals, inputList) = parse fileName
 
+        (* Iterate function with the help of:
+        https://stackoverflow.com/questions/54337199/how-to-make-nested-for-loop-over-two-integer-ranges *)
         fun iterate (n, f) =
             let fun go i = 
                 if i < n then (
@@ -33,7 +35,8 @@ fun longest fileName =
             in
                 go 1
             end
-
+        
+        (* Reverse iterate function. *)
         fun reverseIterate (n, f) =
             let fun go i = 
                 if i >= 0 then (
