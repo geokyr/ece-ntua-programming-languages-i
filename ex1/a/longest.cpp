@@ -69,12 +69,14 @@ int main(int argc, char *argv[]){
         inputfile >> arr[i];
     }
     inputfile.close();
- 
+    
+    // Modify the list according to our algorithm logic noted in the end.
     for(int k = 0; k < days; k++){
         arr[k] = -arr[k];
         arr[k] -= hospitals;
     }
- 
+    
+    // Create the prefix array, by adding every element to the previous sum.
     prefix[0] = 0;
     for (int i = 1; i < days + 1; i++) {
         prefix[i] = prefix[i - 1] + arr[i - 1];
