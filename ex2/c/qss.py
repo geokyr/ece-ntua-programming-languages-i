@@ -17,7 +17,7 @@ file.close()
 stack = []
 init = (queue, stack, '')
 
-def next(a): #s = (queue, stack, 'path')
+def next(a):
     for j in range(2):
         if(j == 0 and a[0]):
             q = a[0][1:]
