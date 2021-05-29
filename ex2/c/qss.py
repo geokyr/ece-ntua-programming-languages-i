@@ -2,6 +2,7 @@ import sys
 from collections import deque
 
 def isSorted(l):
+    l = list(map(int, l))
     for i in range(0, len(l) - 1):
         if l[i] > l[i+1]:
             return False
@@ -9,8 +10,8 @@ def isSorted(l):
 
 file = open(sys.argv[1], 'r')
 n = int(file.readline().strip())
-#queue = file.readline().split() 
-queue = list(map(int, file.readline().split()))
+queue = file.readline().split()
+#queue = list(map(int, file.readline().split()))
 file.close()
 
 stack = []
@@ -30,8 +31,8 @@ def next(a): #s = (queue, stack, 'path')
             yield(q, s, p)
 
 Q = deque([init])
-hq = ' '.join(map(str, queue))
-hs = ' '.join(map(str, stack))
+hq = ' '.join(queue)
+hs = ' '.join(stack)
 hq = hash(hq)
 hs = hash(hs)
 visited = {(hq, hs)}
@@ -44,8 +45,8 @@ while Q:
         break
     else:
         for t in next(s):
-            hq = ' '.join(map(str, t[0]))
-            hs = ' '.join(map(str, t[1]))
+            hq = ' '.join(t[0])
+            hs = ' '.join(t[1])
             hq = hash(hq)
             hs = hash(hs)
             if ((hq, hs) not in visited):
