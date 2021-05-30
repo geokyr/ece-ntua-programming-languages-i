@@ -11,7 +11,6 @@ def isSorted(l):
 file = open(sys.argv[1], 'r')
 n = int(file.readline().strip())
 queue = file.readline().split()
-#queue = list(map(int, file.readline().split()))
 file.close()
 
 stack = []
