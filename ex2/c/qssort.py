@@ -54,6 +54,6 @@ while Q:
 
 if solved:
     if(s[2]):
-            print(s[2])
+        print(s[2])
     else:
         print("empty")
