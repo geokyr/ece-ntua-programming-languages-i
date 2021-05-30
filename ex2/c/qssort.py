@@ -8,6 +8,19 @@ def isSorted(l):
             return False
     return True
 
+def next(a):
+    for i in range(2):
+        if(i == 0 and a[0]):
+            q = a[0][1:]
+            s = a[1][:] + [a[0][0]]
+            p = a[2] + 'Q'
+            yield(q, s, p)
+        elif(i == 1 and a[1]):
+            s = a[1][:-1]
+            q = a[0][:] + [a[1][-1]]
+            p = a[2] + 'S'
+            yield(q, s, p)
+
 file = open(sys.argv[1], 'r')
 n = int(file.readline().strip())
 queue = file.readline().split()
@@ -15,19 +28,6 @@ file.close()
 
 stack = []
 init = (queue, stack, '')
-
-def next(a):
-    for j in range(2):
-        if(j == 0 and a[0]):
-            q = a[0][1:]
-            s = a[1][:] + [a[0][0]]
-            p = a[2] + 'Q'
-            yield(q, s, p)
-        elif(j == 1 and a[1]):
-            s = a[1][:-1]
-            q = a[0][:] + [a[1][-1]]
-            p = a[2] + 'S'
-            yield(q, s, p)
 
 Q = deque([init])
 hq = ' '.join(queue)
