@@ -1,6 +1,6 @@
-round(File, M, C):-
+round(File, MinDistance, MinIndex):-
     read_input(File, Towns, Cars, CarPositions),
-    main(M, C, Towns, Cars, CarPositions).
+    main(MinDistance, MinIndex, Towns, Cars, CarPositions).
 
 read_input(File, M, N, C):-
     open(File, read, Stream),
@@ -13,14 +13,14 @@ read_line(Stream, L):-
     atomic_list_concat(Atoms, ' ', Atom),
     maplist(atom_number, Atoms, L).
 
-main(A, I, T, C, L):-
-    calculateMaxAndSum(L, T, 0, Max, Sum, StartMax, StartSum, StartTown),
+main(Answer, Index, Towns, Cars, List):-
+    calculateMaxAndSum(List, Towns, 0, Max, Sum, StartMax, StartSum, StartTown),
+    msort(List, SortedList),
+    townsArray(Towns, SortedList, TownsArr),
+    nextPos(TownsArr, 0, NextPos),
+    solve(Towns, Cars, List, TownsArr, Max, Sum, Towns * Cars, 0, 0, NextPos).
 
-    townArray(T, L, TownArr),
-    nextPos(TownArr, 0, NextPos),
-    solve(T, C, L, TownArr, Max, Sum, T * C, 0, 0, NextPos)
-
-isValid(Max, Sum, Flag):-    
+isValid(Max, Sum, Flag):-
     Max <= (Sum - Max) + 1 -> Flag = 1
     ;
     Flag = 0.
@@ -40,13 +40,26 @@ calculateDistance(H, T, Current, Distance):-
     Distance is T + Current - H
     ).
 
-
 nextPos(TownArr, Second, NextPos):-
 
 solve(T, C, L, TownArr, Max, Sum, Answer, Index, First, Second):-
 
 findDistance(...):-
 
-townArray(T, L, TownArr):-
+townsArray(Towns, [H|T], [1]).
+
+townsArray(5, 0|[2,2,2], [])
+    townsArray(5, 2|[2,2], [])
+    townsArray(5, 2|[2], [])
+    townsArray(5, 2, [])
+
+townsArray(Towns, [H1,H2|T], NewList):-
+    townsArray(Towns, [H2|T], [NH|NT]),
+    H1 =:= H2 -> Temp is NH + 1,
+    NewList = [Temp|NT]
+    ;
+    H1 =:= H2 - 1 -> append([1], [NH|NT], NewList)
+    ;
+    
 
 findNewSum(Sum, C, T, TownArr, NewSum):-
