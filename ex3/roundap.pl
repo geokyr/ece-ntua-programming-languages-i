@@ -8,7 +8,6 @@ round(File, M, C):-
     once(solve(Tail, 1, StartingFilteredCity, FilteredCityList, InitialSum, InitialMax, InitialCity, InitialSum, Cities, Cars, (M, C)))
     .
 
-
 read_input(File, M, N, C):-
     open(File, read, Stream),
     read_line(Stream, [M, N]),
@@ -19,24 +18,6 @@ read_line(Stream, L):-
     atom_codes(Atom, Line),
     atomic_list_concat(Atoms, ' ', Atom),
     maplist(atom_number, Atoms, L).
-
-
-% (Cities, [], ResultList)
-% initialiseCityList(I, Temp, CityList) :- 
-%     (
-%         I = 0 -> CityList = Temp
-%         ;     NewI is I-1,
-%             initialiseCityList(NewI, [0|Temp], CityList)
-%     ).
-
-% (CarList, InitialCityList, FinalCityList)
-% convertList([], List, List).    
-
-% convertList([H|T], Temp, CityList) :-
-%     nth0(H, Temp, Value, NewTemp),
-%     NewValue is Value + 1,
-%     nth0(H, FinalList, NewValue, NewTemp),
-%     convertList(T, FinalList, CityList).
 
 finalConvert([Head|Tail], Length, Result) :-
     once(convertList([Head|Tail], Length, Res)),
@@ -54,7 +35,6 @@ convertList([H1|[H2|T]], Length, Result) :-
 
     ).
 
-
 fill0( A, B, List, Result) :- 
     (
         A =:= B - 1  -> Result = List
@@ -62,13 +42,11 @@ fill0( A, B, List, Result) :-
         fill0( A, Temp, [0|List], Result)
     ).
 
-
 calcDistance(Source, Destination, CityCount, Distance) :- 
     (  
         Source =< Destination -> Distance is Destination - Source
         ; Distance is CityCount - Source + Destination
     ).
-
 
 calcSumMax([], Sum, Max, City, CityCount, [Sum, Max, City]).  
 
@@ -82,9 +60,7 @@ delete([], _,[]).
 delete([0|T], I, L) :- NewI is I + 1, delete(T, NewI, L).
 delete([H|T], I, [(I, H)|T2]) :- NewI is I + 1, delete(T, NewI, T2).
 
-% Creates list of tuples (index, value) of non zero values
 filterOutZeros(List, Filtered) :- once(delete(List, 0, Filtered)).
-
 
 checkValid(Sum, Max, Result) :-
     Temp is Max - (Sum - Max),
@@ -127,5 +103,4 @@ solve([H1|T1], Index, [(I, H)|T], Backup, Sum, Max, City, SumRes, CityCount, Car
                 )
             ; solve(T1, NewIndex, [(I, H)|T], Backup, NewSum, Max, City, SumRes, CityCount, CarCount, Result)
         )
-
-    ).    
+    ).

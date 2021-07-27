@@ -1,65 +1,133 @@
-round(File, MinDistance, MinIndex):-
-    read_input(File, Towns, Cars, CarPositions),
-    main(MinDistance, MinIndex, Towns, Cars, CarPositions).
+round(File, M, C):-
+    read_input(File, Towns, Cars, List),
+    main(M, C, Towns, Cars, List)
+    .
 
 read_input(File, M, N, C):-
     open(File, read, Stream),
     read_line(Stream, [M, N]),
-    read_line(Stream, C).
+    read_line(Stream, C)
+    .
 
 read_line(Stream, L):-
     read_line_to_codes(Stream , Line),
     atom_codes(Atom, Line),
     atomic_list_concat(Atoms, ' ', Atom),
-    maplist(atom_number, Atoms, L).
+    maplist(atom_number, Atoms, L)
+    .
 
-main(Answer, Index, Towns, Cars, List):-
-    calculateMaxAndSum(List, Towns, 0, Max, Sum, StartMax, StartSum, StartTown),
+main(Answer, AnswerIndex, Towns, Cars, List):-
+    calculateMaxAndSum(List, Towns, 0, 0, 0, StartMax, StartSum, StartTown),
     msort(List, SortedList),
-    townsArray(Towns, SortedList, TownsArr),
-    nextPos(TownsArr, 0, NextPos),
-    solve(Towns, Cars, List, TownsArr, Max, Sum, Towns * Cars, 0, 0, NextPos).
+    createTownsArray(SortedList, Towns, [TownsArrHead|TownsArrTail]),
+    createNonZeroArray([TownsArrHead|TownsArrTail], IndexArr),
+    nextIndexArr(IndexArr, 1, FirstIndexArr),
+    once(solve(TownsArrTail, FirstIndexArr, IndexArr, 1, Towns, Cars, StartMax, StartSum, StartTown, StartSum, Answer, AnswerIndex))
+    .
 
 isValid(Max, Sum, Flag):-
-    Max <= (Sum - Max) + 1 -> Flag = 1
+    Max =< (Sum - Max) + 1 -> Flag = true
     ;
-    Flag = 0.
+    Flag = false
+    .
     
-calculateMaxAndSum([], T, Current, Max, Sum, Max, Sum, Current).
+calculateMaxAndSum([], Towns, Current, Max, Sum, Max, Sum, Current).
 
-calculateMaxAndSum([H|Ts], T, Current, Max, Sum, StartMax, StartSum, StartTown):-
-    calculateDistance(H, T, Current, Distance),
+calculateMaxAndSum([H|T], Towns, Current, Max, Sum, StartMax, StartSum, StartTown):-
+    calculateDistance(H, Towns, Current, Distance),
     NewMax is max(Max, Distance),
-    NewSum is Sum + Distance,
-    calculateMaxAndSum(Ts, T, Current, NewMax, NewSum, StartMax, StartSum, StartTown).
+    NewSum is (Sum + Distance),
+    calculateMaxAndSum(T, Towns, Current, NewMax, NewSum, StartMax, StartSum, StartTown)
+    .
 
-calculateDistance(H, T, Current, Distance):-
-    (
-    Current >= H -> Distance is Current - H
+calculateDistance(H, Towns, Current, Distance):-
+    H =< Current -> Distance is Current - H
     ;
-    Distance is T + Current - H
-    ).
+    Distance is Towns + Current - H
+    .
 
-nextPos(TownArr, Second, NextPos):-
+createTownsArray([H|T], Towns, TownsArr):-
+    once(townsArray([H|T], Towns, TownsArrZeros)),
+    correctZeros(-1, H, TownsArrZeros, TownsArr)
+    .
 
-solve(T, C, L, TownArr, Max, Sum, Answer, Index, First, Second):-
+townsArray([H], Towns, [1|Tail]):- correctZeros(H, Towns, [], Tail).
 
-findDistance(...):-
-
-townsArray(Towns, [H|T], [1]).
-
-townsArray(5, 0|[2,2,2], [])
-    townsArray(5, 2|[2,2], [])
-    townsArray(5, 2|[2], [])
-    townsArray(5, 2, [])
-
-townsArray(Towns, [H1,H2|T], NewList):-
-    townsArray(Towns, [H2|T], [NH|NT]),
-    H1 =:= H2 -> Temp is NH + 1,
+townsArray([H1,H2|T], Towns, NewList):-
+    townsArray([H2|T], Towns, [NH|NT]),
+    (
+    H1 = H2 -> Temp is NH + 1,
     NewList = [Temp|NT]
     ;
-    H1 =:= H2 - 1 -> append([1], [NH|NT], NewList)
-    ;
-    
+    correctZeros(H1, H2, [NH|NT], Corrected),
+    NewList = [1|Corrected]
+    )
+    .
 
-findNewSum(Sum, C, T, TownArr, NewSum):-
+correctZeros(Current, Target, List, CorrectedList):-
+    Current =:= Target - 1 -> CorrectedList = List
+    ;
+    Temp is Target - 1,
+    correctZeros(Current, Temp, [0|List], CorrectedList)
+    .
+
+createIndexArr([], _, []).
+
+createIndexArr([0|T], Index, List):-
+    NewIndex is Index + 1,
+    createIndexArr(T, NewIndex, List)
+    . 
+
+createIndexArr([H|T], Index, [(Index, H)|Tail]):- 
+    NewIndex is Index + 1,
+    createIndexArr(T, NewIndex, Tail)
+    .
+    
+createNonZeroArray(TownsArr, IndexArr):-
+    once(createIndexArr(TownsArr, 0, IndexArr))
+    .
+
+nextIndexArr([(I, H)|T], Index, NextIndexArr):-
+    Index >= I ->  nextIndexArr(T, Index, NextIndexArr)
+    ;
+    NextIndexArr = [(I, H)|T]
+    .
+
+findNewSum(OldSum, Cars, Towns, Head, NewSum):-
+    NewSum is OldSum + Cars - Towns*Head
+    .
+
+isOptimal(OldSum, NewSum, Flag):-
+    OldSum > -1 -> (
+        NewSum < OldSum -> Flag = true
+        ;
+        Flag = false
+    )
+    ;
+    Flag = true
+    .
+
+solve([], _, BackupList, _, Towns, Cars, MaxDistance, CurrentSum, SumIndex, Sum, Sum, SumIndex).
+
+solve([Head|Tail], [], BackupList, Index, Towns, Cars, MaxDistance, CurrentSum, SumIndex, Sum, Answer, AnswerIndex):-
+    solve([Head|Tail], BackupList, BackupList, Index, Towns, Cars, MaxDistance, CurrentSum, SumIndex, Sum, Answer, AnswerIndex)
+    .
+
+solve([Head|Tail], [(I, H)|T], BackupList, Index, Towns, Cars, MaxDistance, CurrentSum, SumIndex, Sum, Answer, AnswerIndex):-
+    Index = I -> solve([Head|Tail], T, BackupList, Index, Towns, Cars, MaxDistance, CurrentSum, SumIndex, Sum, Answer, AnswerIndex)
+    ;
+    NewIndex is Index + 1,
+    calculateDistance(I, Towns, Index, NewDistance),
+    findNewSum(CurrentSum, Cars, Towns, Head, NewSum),
+    isValid(NewDistance, NewSum, Flag),
+    (
+        Flag = true -> isOptimal(Sum, NewSum, SecondFlag),
+        (
+            SecondFlag = true -> solve(Tail, [(I, H)|T], BackupList, NewIndex, Towns, Cars, NewDistance, NewSum, Index, NewSum, Answer, AnswerIndex)
+            ;
+            solve(Tail, [(I, H)|T], BackupList, NewIndex, Towns, Cars, MaxDistance, NewSum, SumIndex, Sum, Answer, AnswerIndex)
+        )
+    ;
+    solve(Tail, [(I, H)|T], BackupList, NewIndex, Towns, Cars, MaxDistance, NewSum, SumIndex, Sum, Answer, AnswerIndex)
+    )
+    .
