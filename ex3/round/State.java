@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class State {
     private int towns, cars, answer, answerIndex;
     private int[] carPositions, townsArr;
