@@ -70,14 +70,6 @@ public class State {
     }
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("");
-        sb.append(queue.toString());
-        sb.append(stack.toString());
-        return sb.toString();
-    }
-
-    @Override
     public int hashCode() {
         return (17 * queue.hashCode() + 42 * stack.hashCode());
     }
