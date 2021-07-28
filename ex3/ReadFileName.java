@@ -1,9 +1,9 @@
 import java.io.*;
 
-public class QSsortReadFileName {
+public class ReadFileName {
     private int[] input;
 
-    public QSsortReadFileName(String fileName) {
+    public ReadFileName(String fileName) {
         BufferedReader objReader = null;
         try {
             objReader = new BufferedReader(new FileReader(fileName));
@@ -20,7 +20,7 @@ public class QSsortReadFileName {
                 array[i] = Integer.parseInt(a);
                 i++;
             }
-            
+
             input = array;
         } catch (IOException e){
             e.printStackTrace();
