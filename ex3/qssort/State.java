@@ -79,6 +79,6 @@ public class State {
 
     @Override
     public int hashCode() {
-      return Objects.hash(queue, stack);
+        return (17 * queue.hashCode() + 42 * stack.hashCode());
     }
 }

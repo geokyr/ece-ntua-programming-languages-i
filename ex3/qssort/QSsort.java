@@ -18,8 +18,8 @@ public class QSsort {
         State initial = new State(initialQ, initialS, path);
         String answer = "";
 
-        Set<String> visited = new HashSet<String>();
-        visited.add(initial.toString());
+        Set<Integer> visited = new HashSet<Integer>();
+        visited.add(initial.hashCode());
         
         Deque<State> Q = new ArrayDeque<State>();
         Q.add(initial);
@@ -40,7 +40,7 @@ public class QSsort {
                 State[] next = s.next();
                 for(int i = 0; i < 2; i++) {
                     if(next[i] != null) {
-                        String hash = next[i].toString();
+                        Integer hash = next[i].hashCode();
                         if(!visited.contains(hash)){
                             Q.add(next[i]);
                             visited.add(hash);
