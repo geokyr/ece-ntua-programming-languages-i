@@ -28,17 +28,33 @@ public class State {
     }
 
     public State[] next() {
-        State[] states = new State[2];
+        State[] states = new State[4];
         int i = 0;
         if(!queue.isEmpty()) {
-            states[i] = this.moveQ();
-            i++;
+            State q = this.moveQ();
+            if(q.getQueueSize() > 0) {
+                states[i] = q.moveQ();
+                i++;
+            }
+            if(q.getStackSize() > 0) {
+                states[i] = q.moveS();
+                i++;
+            }
         }
         if(!stack.isEmpty()) {
-            states[i] = this.moveS();
+            State s = this.moveS();
+            if(s.getQueueSize() > 0) {
+                states[i] = s.moveQ();
+                i++;
+            }
+            if(s.getStackSize() > 0) {
+                states[i] = s.moveS();
+                i++;
+            }
         }
         return states;
     }
+
      
     public boolean isSorted() {
         if(queue.isEmpty()) {

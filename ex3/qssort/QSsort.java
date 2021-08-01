@@ -38,7 +38,7 @@ public class QSsort {
             }
             else {
                 State[] next = s.next();
-                for(int i = 0; i < 2; i++) {
+                for(int i = 0; i < 4; i++) {
                     if(next[i] != null) {
                         Integer hash = next[i].hashCode();
                         if(!visited.contains(hash)){

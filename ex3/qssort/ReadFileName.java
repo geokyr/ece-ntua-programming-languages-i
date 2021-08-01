@@ -33,7 +33,6 @@ public class ReadFileName {
                 exception.printStackTrace();
             }
         }
-    
     }
 
     public int[] getInputArray() {
