@@ -3,6 +3,7 @@ def f(x, y):
 
 f(17,8)
 f("","banana")
+f("na","ba")
 
 def count_substr(s, k):
     l = len(s)
