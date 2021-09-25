@@ -14,3 +14,10 @@ fun suffixes [] = [[]]
       in
         reduceB aux [[]] l
       end
+
+val y = ref 1;
+
+fun f x = 
+  (!y) + (x + x);
+
+(f (y := (!y) + 1; !y)) + (!y);

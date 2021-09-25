@@ -10,9 +10,9 @@ fun enum2 low high =
       if low <= high then 
         aux (low + 1) high (low :: acc)
       else
-        acc
+        acc (* rev acc *)
   in
-    rev (aux low high [])
+    rev (aux low high []) (* aux low high [] *)
   end
 
 fun enum3 low high l =
