@@ -1,10 +1,10 @@
-(* fun s ls =
+fun s ls =
   let
     fun c [] a = a
       | c (x :: r) a = c x (r :: a)
   in 
     c ls []
-  end *)
+  end
 
 fun s2 ls =
   let 

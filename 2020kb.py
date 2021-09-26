@@ -6,14 +6,15 @@ f("","banana")
 f("na","ba")
 
 def count_substr(s, k):
-    l = len(s)
+    n = len(s)
     t = set()
-    result = 0
-    for i in range(l - k + 1):
-        if s[i:(i + k)] not in t:
-            result += 1
-            t.add(s[i:(i + k)])
-    return result
+    for i in range(n - k + 1):
+        str = ""
+        for j in range(i, i + k):
+            str += s[j]
+        if str not in t:
+            t.add(str)
+    return len(t)
 
 print(count_substr("helloworld", 3))
 print(count_substr("banana", 2))
