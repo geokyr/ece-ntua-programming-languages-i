@@ -19,11 +19,12 @@ def in_degree(m, u):
     return sum(m[i][u] for i in range(len(m)))
 
 g = [
-     [1, 2],
-     [0],
-     [0, 1, 3],
-     [0]
-    ]
+    [1, 2],
+    [0],
+    [0, 1, 3],
+    [0]
+]
+
 m = adj_list_mat(g)
 
 for row in m:
