@@ -1,4 +1,4 @@
 pl1
 ---
 
-Repository for the Programming Languages 1 course.
+Repository for the Programming Languages I course.
