@@ -33,8 +33,6 @@ find_max(T,T).
 
 % ---------------------------
 
-5)
-α)
 maximize(Tree, MaxTree):-
     get_max(Tree, 0, Max),
     transform(Tree, Max, MaxTree).
@@ -54,7 +52,6 @@ transform(n(T1,T2,T3), Max, n(T4,T5,T6)):-
     transform(T2, Max, T5),
     transform(T3, Max, T6).
 
-β)
 unoddsum(N, N):-
     integer(N).
 unoddsum(n(T1,T2,T3), Term):-
