@@ -2,6 +2,11 @@
 
 Lab Assignments, Exam Answers and Practice Problems for the [Programming Languages I](https://www.ece.ntua.gr/en/undergraduate/courses/3061) course, during the 6th semester of the School of Electrical and Computer Engineering at the National Technical University of Athens.
 
+## Team Members
+
+- [Georgios Kyriakopoulos](https://github.com/geokyr)
+- [Serafeim Tzelepis](https://github.com/sertze)
+
 ## Lab Assignments
 
 There were 3 lab assignments in total. Each lab included a set of problems that had to be solved using the programming languages that were taught during the course, namely C++, Standard ML, Prolog, Python and Java. The goal was to become familiar with Object Oriented, Functional and Logic Programming Languages.
