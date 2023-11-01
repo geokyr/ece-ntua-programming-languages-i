@@ -6,7 +6,11 @@ Lab Assignments, Exam Answers and Practice Problems for the [Programming Languag
 
 There were 3 lab assignments in total. Each lab included a set of problems that had to be solved using the programming languages that were taught during the course, namely C++, Standard ML, Prolog, Python and Java. The goal was to become familiar with Object Oriented, Functional and Logic Programming Languages.
 
-The first lab included 2 problems that had to be solved in both C++ and Standard ML. The second lab included 1 problem to be solved in Prolog, 1 problem to be solved in Python and 1 more problem to be solved in both Prolog and Python. The third lab included 1 problem to be solved in Java and 1 more problem to be solved in Java, Prolog and Standard ML.
+The first lab included 2 problems that had to be solved in both C++ and Standard ML.
+
+The second lab included 1 problem to be solved in Prolog, 1 problem to be solved in Python and 1 more problem to be solved in both Prolog and Python.
+
+The third lab included 1 problem to be solved in Java and 1 more problem to be solved in Java, Prolog and Standard ML.
 
 ## Exam Answers
 
