@@ -1,4 +1,4 @@
-# ece-ntua-programming-languages-i
+# programming-languages-i
 
 Lab Assignments, Exam Answers and Practice Problems for the [Programming Languages I](https://www.ece.ntua.gr/en/undergraduate/courses/3061) course, during the 6th semester of the School of Electrical and Computer Engineering at the National Technical University of Athens.
 
